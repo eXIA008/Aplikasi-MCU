@@ -29,7 +29,7 @@ func main() {
 	var nPas, nPkt int
 	var x int
 
-	for  {
+	for x != 4 {
 		fmt.Println("-------- WELCOME --------")
 		fmt.Println("     Medical Checkup     ")
 		fmt.Println("        Main Menu        ")
@@ -44,20 +44,22 @@ func main() {
 		if x == 1 {
 			menu_pasien(&dataPas, &nPas, &dataPkt, &nPkt)
 		} else if x == 2 {
-			menu_paket()
+			//menu_paket()
 		} else if x == 3 {
-			laporan(data, nData)
+			//laporan(data, nData)
 		} else if x == 4 {
+			fmt.Print("\033[H\033[2J")
 			fmt.Println("---  Selamat Tinggal  ---")
 		}
 	}
-	
+
 }
 
+/*CUT THIS OUT [PASIEN.GO]---------------------------------------------------------------------*/
 func menu_pasien(pas *tabPAS, nPAS *int, pak *tabPKT, nPAK *int) {
 	var x int
 
-	for {
+	for x != 4 {
 		fmt.Print("\033[H\033[2J")
 		fmt.Println("-------------------------")
 		fmt.Println("       Menu Pasien       ")
@@ -70,13 +72,19 @@ func menu_pasien(pas *tabPAS, nPAS *int, pak *tabPKT, nPAK *int) {
 		fmt.Print("Pilihan : ")
 		fmt.Scan(&x)
 		if x == 1 {
-			inPasien(&pas, &nPAS, *pak, *nPAK)
+			///inPasien(pas, nPAS, *pak, *nPAK)
 		} else if x == 2 {
-			findPasien(data, nData)
+			//findPasien(data, nData)
 		} else if x == 3 {
-			tampilkan_Pasien(data, nData)
-		} else if x == 4 {
-			main()
+			//tampilkan_Pasien(data, nData)
 		}
 	}
 }
+
+//func inPasien(pas *tabPAS, nPAS *int, paket tabPKT, nPAK int) {
+//	for {
+
+//	}
+//}
+
+/*---------------------------------------------------------------------------------------------*/
