@@ -42,7 +42,7 @@ func main() {
 		fmt.Print("Pilihan: ")
 		fmt.Scan(&x)
 		if x == 1 {
-			menu_pasien(&dataPas, &nPas, &dataPkt, &nPkt)
+			menu_pasien(&dataPas, &nPas, dataPkt, nPkt)
 		} else if x == 2 {
 			//menu_paket()
 		} else if x == 3 {
@@ -56,35 +56,154 @@ func main() {
 }
 
 /*CUT THIS OUT [PASIEN.GO]---------------------------------------------------------------------*/
-func menu_pasien(pas *tabPAS, nPAS *int, pak *tabPKT, nPAK *int) {
+func menu_pasien(pas *tabPAS, nPAS *int, pak tabPKT, nPAK int) {
 	var x int
-
 	for x != 4 {
 		fmt.Print("\033[H\033[2J")
 		fmt.Println("-------------------------")
 		fmt.Println("       Menu Pasien       ")
 		fmt.Println("-------------------------")
-		fmt.Println("1. Tambah Data Pasien    ")
-		fmt.Println("2. Cari Data Pasien      ")
-		fmt.Println("3. Lihat Data Pasien     ")
+		fmt.Println("1. Tambah Data           ")
+		fmt.Println("2. Cari Data             ")
+		fmt.Println("3. Lihat Data            ")
 		fmt.Println("4. Kembali               ")
 		fmt.Println("-------------------------")
 		fmt.Print("Pilihan : ")
 		fmt.Scan(&x)
 		if x == 1 {
-			///inPasien(pas, nPAS, *pak, *nPAK)
+			inPasien(pas, nPAS, pak, nPAK)
 		} else if x == 2 {
-			//findPasien(data, nData)
+			findPasien(*pas, *nPAS)
 		} else if x == 3 {
-			//tampilkan_Pasien(data, nData)
+			cetakPasien(*pas, *nPAS)
 		}
 	}
 }
 
-//func inPasien(pas *tabPAS, nPAS *int, paket tabPKT, nPAK int) {
-//	for {
+func inPasien(pas *tabPAS, nPAS *int, pak tabPKT, nPAK int) {
+	var pilih string
+	for pilih != "N" {
+		fmt.Print("\033[H\033[2J")
+		fmt.Println("-----  Tambah Data  -----")
+		fmt.Print("ID dan Nama Pasien  (Spasi diganti dengan '_') : ")
+		fmt.Scan(&pas[*nPAS].ID, &pas[*nPAS].nama)
+		//cetakPaket(pak, nPAK)
+		fmt.Printf("Pilihan Paket: ")
+		fmt.Scan(&pas[*nPAS].paketMCU.PktPas)
+		fmt.Printf("Tanggal Kunjungan (DD MM YYYY) : ")
+		fmt.Scan(&pas[*nPAS].waktu.D, &pas[*nPAS].waktu.M, &pas[*nPAS].waktu.Y)
+		*nPAS++
+		fmt.Print("\033[H\033[2J")
+		fmt.Print("Lanjutkan? (Y/N) : ")
+		fmt.Scan(&pilih)
+	}
+}
 
-//	}
-//}
+func findPasien(pas tabPAS, nPAS int) {
+	var pilih, kunci string
+	var d1, d2, m1, m2, y1, y2 int
+	found := -1
+	fmt.Print("\033[H\033[2J")
+	for found != -1 {
+		fmt.Println("A. Nama, B. Paket, C.Periode")
+		fmt.Print("Pilihan : ")
+		fmt.Scan(&pilih)
+		temp := 1
+		if pilih == "A" || pilih == "B" {
+			fmt.Print("Nama Pasien atau Nama Paket : ")
+			fmt.Scan(&kunci)
+			fmt.Println("----- Daftar Pasien -----")
+			for i := 0; i < nPAS; i++ {
+				if pas[i].paketMCU.PktPas == kunci || pas[i].nama == kunci {
+					fmt.Printf("%-5d. %-30s %-15s %d/%d/%d\n", temp, pas[i].nama, pas[i].paketMCU.PktPas, pas[i].waktu.D, pas[i].waktu.M, pas[i].waktu.Y)
+					temp++
+					found = 1
+				}
+			}
+		} else if pilih == "C" {
+			fmt.Print("Mulai dari : ")
+			fmt.Scan(&d1, &m1, &y1)
+			fmt.Print("Sampai : ")
+			fmt.Scan(&d2, &m2, &y2)
+			for i := 0; i < nPAS; i++ {
+				if (pas[i].waktu.Y > y1 || (pas[i].waktu.Y == y1 && pas[i].waktu.M > m1) || (pas[i].waktu.Y == y1 && pas[i].waktu.M == m1 && pas[i].waktu.D >= d1)) &&
+					(pas[i].waktu.Y < y2 || (pas[i].waktu.Y == y2 && pas[i].waktu.M < m2) || (pas[i].waktu.Y == y2 && pas[i].waktu.M == m2 && pas[i].waktu.D <= d2)) {
+					fmt.Printf("%-5d. %-30s %-15s %d/%d/%d\n", temp, pas[i].nama, pas[i].paketMCU.PktPas, pas[i].waktu.D, pas[i].waktu.M, pas[i].waktu.Y)
+					temp++
+					found = 1
+				}
+			}
+		}
+		if found == -1 {
+			fmt.Print("Paket tidak Ditemukan!")
+		}
+	}
+}
+
+func cetakPasien(pas tabPAS, nPAS int) {
+	var pilih string
+	//sortPasien(&pas, nPAS)
+	fmt.Print("\033[H\033[2J")
+	for pilih != "C" {
+		fmt.Println("----- Daftar Pasien -----")
+		fmt.Printf("%-5s %-30s %-15s %s\n", "No.", "Nama", "Paket", "Tanggal Kunjungan")
+		for i := 0; i < nPAS; i++ {
+			fmt.Printf("%-5d %-30s %-15s %d/%d/%d\n", i+1, pas[i].nama, pas[i].paketMCU.PktPas, pas[i].waktu.D, pas[i].waktu.M, pas[i].waktu.Y)
+		}
+		fmt.Println("A. Edit, B. Hapus, C. Kembali")
+		fmt.Print("Pilihan : ")
+		fmt.Scan(&pilih)
+		if pilih == "A" {
+			editPasien(pas, *nPAS)
+		} else if pilih == "B" {
+			hapusPasien(pas, nPAS)
+		}
+	}
+}
+
+func editPasien(pas *tabPAS, nPAS int) {
+	var idPas int
+	var name string
+	found := false
+	for !found {
+		fmt.Print("ID dan Nama Pasien yang Ingin Diedit : ")
+		fmt.Scan(&idPas, &name)
+		idx := cariIdxPas(*pas, nPAS, name, idPas)
+		if idx != -1 {
+			fmt.Print("Nama : ")
+			fmt.Scan(&pas[idx].nama)
+			fmt.Print("Hasil Medical Checkup : ")
+			fmt.Scan(&pas[idx].rekap)
+			found = true
+		} else {
+			fmt.Print("\033[H\033[2J")
+			fmt.Scan("Data Pasien Tidak Ditemukan!")
+		}
+	}
+}
+
+func hapusPasien(pas *tabPAS, nPAS *int) {
+	var name string
+	var idPas, temp int
+	found := false
+	for !found {
+		fmt.Print("ID dan Nama Pasien yang Ingin Dihapus : ")
+		fmt.Scan(&idPas, &name)
+		idx := cariIdxPas(*pas, *nPAS, name, idPas)
+		if idx != -1 {
+			temp = idx
+			for i := 0; i < *nPAS-1; i++ {
+				pas[temp] = pas[temp+1]
+				temp++
+			}
+			*nPAS--
+			fmt.Println("Data berhasil dihapus")
+			found = true
+		} else {
+			fmt.Print("\033[H\033[2J")
+			fmt.Println("Data tidak ditemukan")
+		}
+	}
+}
 
 /*---------------------------------------------------------------------------------------------*/
