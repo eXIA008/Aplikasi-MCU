@@ -75,7 +75,7 @@ func menu_pasien(pas *tabPAS, nPAS *int, pak tabPKT, nPAK int) {
 		} else if x == 2 {
 			findPasien(*pas, *nPAS)
 		} else if x == 3 {
-			cetakPasien(*pas, *nPAS)
+			cetakPasien(*pas, *nPAS, pak, nPAK)
 		}
 	}
 }
@@ -140,11 +140,11 @@ func findPasien(pas tabPAS, nPAS int) {
 	}
 }
 
-func cetakPasien(pas tabPAS, nPAS int) {
+func cetakPasien(pas tabPAS, nPAS int, pak tabPKT, nPAK int) {
 	var pilih string
-	//sortPasien(&pas, nPAS)
-	fmt.Print("\033[H\033[2J")
+	sortPasien(&pas, nPAS)
 	for pilih != "C" {
+		fmt.Print("\033[H\033[2J")
 		fmt.Println("----- Daftar Pasien -----")
 		fmt.Printf("%-5s %-30s %-15s %s\n", "No.", "Nama", "Paket", "Tanggal Kunjungan")
 		for i := 0; i < nPAS; i++ {
@@ -154,24 +154,37 @@ func cetakPasien(pas tabPAS, nPAS int) {
 		fmt.Print("Pilihan : ")
 		fmt.Scan(&pilih)
 		if pilih == "A" {
-			editPasien(pas, *nPAS)
+			editPasien(&pas, nPAS, pak, nPAK)
 		} else if pilih == "B" {
-			hapusPasien(pas, nPAS)
+			hapusPasien(&pas, &nPAS)
 		}
 	}
 }
 
-func editPasien(pas *tabPAS, nPAS int) {
+func editPasien(pas *tabPAS, nPAS int, pak tabPKT, nPAK int) {
 	var idPas int
-	var name string
+	var name, paket string
 	found := false
 	for !found {
+		fmt.Print("\033[H\033[2J")
 		fmt.Print("ID dan Nama Pasien yang Ingin Diedit : ")
 		fmt.Scan(&idPas, &name)
 		idx := cariIdxPas(*pas, nPAS, name, idPas)
 		if idx != -1 {
 			fmt.Print("Nama : ")
 			fmt.Scan(&pas[idx].nama)
+
+			cetakPaket(pak, nPAK)
+			fmt.Print("Pilih Paket : ")
+			fmt.Scan(&paket)
+			idPak := cariIdxPak(pak, nPAK, paket)
+			if idPak != -1 {
+				pas[idx].paketMCU.PktPas = paket
+			}
+
+			fmt.Print("Tanggal Kunjungan (DD MM YYYY): ")
+			fmt.Scan(&pas[idx].waktu.D, &pas[idx].waktu.M, &pas[idx].waktu.Y)
+
 			fmt.Print("Hasil Medical Checkup : ")
 			fmt.Scan(&pas[idx].rekap)
 			found = true
@@ -187,6 +200,7 @@ func hapusPasien(pas *tabPAS, nPAS *int) {
 	var idPas, temp int
 	found := false
 	for !found {
+		fmt.Print("\033[H\033[2J")
 		fmt.Print("ID dan Nama Pasien yang Ingin Dihapus : ")
 		fmt.Scan(&idPas, &name)
 		idx := cariIdxPas(*pas, *nPAS, name, idPas)
@@ -205,5 +219,37 @@ func hapusPasien(pas *tabPAS, nPAS *int) {
 		}
 	}
 }
+
+func cariIdxPas(pas tabPAS, nPas int, x string, id int) int {
+	found := -1
+	var i int
+	for i < nPas && found == -1 {
+		if pas[i].nama == x && pas[i].ID == id {
+			found = i
+		} else {
+			i++
+		}
+	}
+	return found
+}
+
+func sortPasien(pas *tabPAS, nPAS int) {
+	pass := 1
+	for pass < nPAS {
+		i := pass
+		temp1 := pas[pass].biaya
+		temp2 := pas[pass].waktu
+		for i > 0 && (temp1 < pas[i-1].biaya ||
+			(temp1 == pas[i-1].biaya && (temp2.Y < pas[i-1].waktu.Y || (temp2.Y == pas[i-1].waktu.Y &&
+				(temp2.M < pas[i-1].waktu.M || (temp2.M == pas[i-1].waktu.M && temp2.D < pas[i-1].waktu.D)))))) {
+			pas[i] = pas[i-1]
+			i--
+		}
+		pas[i].biaya = temp1
+		pas[i].waktu = temp2
+		pass++
+	}
+}
+
 
 /*---------------------------------------------------------------------------------------------*/
