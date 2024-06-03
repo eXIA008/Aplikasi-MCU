@@ -234,22 +234,87 @@ func cariIdxPas(pas tabPAS, nPas int, x string, id int) int {
 }
 
 func sortPasien(pas *tabPAS, nPAS int) {
+	fmt.Print("\033[H\033[2J")
+	var pilih string
+	fmt.Print("Pengurutan (ASC/DSC) :")
+	fmt.Scan(&pilih)
 	pass := 1
-	for pass < nPAS {
-		i := pass
-		temp1 := pas[pass].biaya
-		temp2 := pas[pass].waktu
-		for i > 0 && (temp1 < pas[i-1].biaya ||
-			(temp1 == pas[i-1].biaya && (temp2.Y < pas[i-1].waktu.Y || (temp2.Y == pas[i-1].waktu.Y &&
-				(temp2.M < pas[i-1].waktu.M || (temp2.M == pas[i-1].waktu.M && temp2.D < pas[i-1].waktu.D)))))) {
-			pas[i] = pas[i-1]
-			i--
+	if pilih == "DSC"|| pilih == "dsc" {
+		/*
+			for pass < nPAS {
+				i := pass
+				temp1 := pas[pass].biaya
+				temp2 := pas[pass].waktu
+				for i > 0 && (temp1 < pas[i-1].biaya ||
+					(temp1 == pas[i-1].biaya && (temp2.Y < pas[i-1].waktu.Y || (temp2.Y == pas[i-1].waktu.Y &&
+						(temp2.M < pas[i-1].waktu.M || (temp2.M == pas[i-1].waktu.M && temp2.D < pas[i-1].waktu.D)))))) {
+					pas[i] = pas[i-1]
+					i--
+				}
+				pas[i].biaya = temp1
+				pas[i].waktu = temp2
+				pass++
+			}
+		*/
+		// Selection Sort DESCENDING
+		for pass < nPAS {
+			idx := pass - 1
+			i := pass
+			for i < nPAS {
+				if pas[idx].biaya < pas[i].biaya || (pas[idx].biaya == pas[idx].biaya &&
+					(pas[idx].waktu.Y < pas[i].waktu.Y || (pas[idx].waktu.Y == pas[i].waktu.Y &&
+						pas[idx].waktu.M < pas[i].waktu.M || (pas[idx].waktu.M == pas[i].waktu.M &&
+						pas[idx].waktu.D < pas[i].waktu.D)))) {
+					idx = i
+				}
+				i++
+			}
+			temp := pas[pass-1]
+			pas[pass-1] = pas[idx]
+			pas[idx] = temp
+			pass++
 		}
-		pas[i].biaya = temp1
-		pas[i].waktu = temp2
+	} else if pilih == "ASC" || pilih == "asc" {
+
+	}else {
+		fmt.Print("Pilihan tidak valid silahkan pilih kembali : ")
+		fmt.Scan(&pilih)
+	}
+	/*
+		for pass < nPAS {
+			i := pass
+			temp1 := pas[pass].biaya
+			temp2 := pas[pass].waktu
+			for i > 0 && (temp1 > pas[i-1].biaya ||
+				(temp1 == pas[i-1].biaya && (temp2.Y > pas[i-1].waktu.Y || (temp2.Y == pas[i-1].waktu.Y &&
+					(temp2.M > pas[i-1].waktu.M || (temp2.M == pas[i-1].waktu.M && temp2.D > pas[i-1].waktu.D)))))) {
+				pas[i] = pas[i-1]
+				i--
+			}
+			pas[i].biaya = temp1
+			pas[i].waktu = temp2
+			pass++
+		}
+	*/
+	// Selection Sort ASCENDING
+	for pass < nPAS {
+		idx := pass - 1
+		i := pass
+		for i < nPAS {
+			if pas[idx].biaya > pas[i].biaya || (pas[idx].biaya == pas[idx].biaya &&
+				(pas[idx].waktu.Y > pas[i].waktu.Y || (pas[idx].waktu.Y == pas[i].waktu.Y &&
+					pas[idx].waktu.M > pas[i].waktu.M || (pas[idx].waktu.M == pas[i].waktu.M &&
+					pas[idx].waktu.D > pas[i].waktu.D)))) {
+				idx = i
+			}
+			i++
+		}
+		temp := pas[pass-1]
+		pas[pass-1] = pas[idx]
+		pas[idx] = temp
 		pass++
 	}
-}
 
+}
 
 /*---------------------------------------------------------------------------------------------*/
