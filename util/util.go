@@ -1,4 +1,4 @@
-package util 
+package util
 
 const NMAX int = 10000
 
@@ -19,3 +19,15 @@ type tanggal struct {
 type TabPAS [NMAX]pasien
 type TabPKT [NMAX]paket
 
+func CariIdxPak(paket TabPKT, nPAS int, x string) int {
+	found := -1
+	var i int
+	for i < nPAS && found == -1 {
+		if paket[i].Jenis == x {
+			found = i
+		} else {
+			i++
+		}
+	}
+	return found
+}

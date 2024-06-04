@@ -29,7 +29,7 @@ func main() {
 		} else if x == 2 {
 			paketmcu.MenuPaket(&dataPkt, &nPkt)
 		} else if x == 3 {
-			laporan.Laporan(dataPas, nPas)
+			laporan.Laporan(dataPas, nPas)2
 		} else if x == 4 {
 			fmt.Print("\033[H\033[2J")
 			fmt.Println("---  Selamat Tinggal  ---")
