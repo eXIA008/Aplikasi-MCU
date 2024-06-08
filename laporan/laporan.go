@@ -1,8 +1,8 @@
 package laporan
 
 import (
-	"TugasBesar/util"
 	"fmt"
+	"TugasBesar/util"
 )
 
 func Laporan(pasien util.TabPAS, nPas int) {

@@ -5,29 +5,7 @@ import (
 	"fmt"
 )
 
-func MenuPaket(paket *util.TabPKT, nPAK *int) {
-	var x int
-	var dataPkt util.TabPKT
-	var nPkt int
-	for x != 3 {
-		fmt.Print("\033[H\033[2J")
-		fmt.Println("-------------------------")
-		fmt.Println("1. Tambah Paket          ")
-		fmt.Println("2. Lihat Paket           ")
-		fmt.Println("3. Kembali               ")
-		fmt.Println("-------------------------")
-		fmt.Print("Pilihan : ")
-		fmt.Scan(&x)
-		if x == 1 {
-			inPaket(&dataPkt, &nPkt)
-		} else if x == 2 {
-			cetakPaket(dataPkt, nPkt)
-		}
-	}
-
-}
-
-func inPaket(paket *util.TabPKT, nPAK *int) {
+func InPaket(pak *util.TabPKT, nPAK *int) {
 	var pilih string
 	for pilih != "N" {
 		fmt.Print("\033[H\033[2J")
@@ -35,9 +13,9 @@ func inPaket(paket *util.TabPKT, nPAK *int) {
 		fmt.Println("    Tambah Data Paket    ")
 		fmt.Println("-------------------------")
 		fmt.Print("Nama Paket (Spasi diganti dengan '_') : ")
-		fmt.Scan(&paket[*nPAK].Jenis)
+		fmt.Scan(&pak[*nPAK].Jenis)
 		fmt.Print("Harga : ")
-		fmt.Scan(&paket[*nPAK].Harga)
+		fmt.Scan(&pak[*nPAK].Harga)
 		*nPAK++
 		fmt.Print("\033[H\033[2J")
 		fmt.Print("Lanjutkan? (Y/N): ")
@@ -45,7 +23,7 @@ func inPaket(paket *util.TabPKT, nPAK *int) {
 	}
 }
 
-func cetakPaket(paket util.TabPKT, nPAK int) {
+func CetakPaket(paket util.TabPKT, nPAK int) {
 	var pilih string
 	for pilih != "C" {
 		fmt.Print("\033[H\033[2J")
@@ -69,8 +47,8 @@ func cetakPaket(paket util.TabPKT, nPAK int) {
 }
 
 func editPaket(paket *util.TabPKT, nPAK int) {
-	var pilih, name string
-	for pilih != "Y" {
+	var pil, name string
+	for pil != "Y" {
 		fmt.Print("\033[H\033[2J")
 		fmt.Print("Nama Paket : ")
 		fmt.Scan(&name)
@@ -86,7 +64,7 @@ func editPaket(paket *util.TabPKT, nPAK int) {
 			fmt.Println("Paket tidak terubah/tidak ditemukan!")
 		}
 		fmt.Print("Kembali? (Y/N) : ")
-		fmt.Scan(&pilih)
+		fmt.Scan(&pil)
 	}
 }
 
