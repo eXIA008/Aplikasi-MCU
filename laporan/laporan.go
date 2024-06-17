@@ -1,8 +1,8 @@
 package laporan
 
 import (
-	"fmt"
 	"TugasBesar/util"
+	"fmt"
 )
 
 func Laporan(pasien util.TabPAS, nPas int) {
@@ -19,7 +19,7 @@ func Laporan(pasien util.TabPAS, nPas int) {
 		for i := 0; i < nPas; i++ {
 			if (pasien[i].Waktu.Y > y1 || (pasien[i].Waktu.Y == y1 && pasien[i].Waktu.M > m1) || (pasien[i].Waktu.Y == y1 && pasien[i].Waktu.M == m1 && pasien[i].Waktu.D >= d1)) &&
 				(pasien[i].Waktu.Y < y2 || (pasien[i].Waktu.Y == y2 && pasien[i].Waktu.M < m2) || (pasien[i].Waktu.Y == y2 && pasien[i].Waktu.M == m2 && pasien[i].Waktu.D <= d2)) {
-				fmt.Printf("%d. %s\t%s\t%d\t%d/%d/%d\n", i+1, pasien[i].Nama, pasien[i].PaketMCU.PktPas, pasien[i].Biaya, pasien[i].Waktu.D, pasien[i].Waktu.M, pasien[i].Waktu.Y)
+				fmt.Printf("%d. %s\t%s\t%d\t%d/%d/%d\n", i+1, pasien[i].Nama, pasien[i].PaketPas, pasien[i].Biaya, pasien[i].Waktu.D, pasien[i].Waktu.M, pasien[i].Waktu.Y)
 				pemasukan += pasien[i].Biaya
 			}
 		}

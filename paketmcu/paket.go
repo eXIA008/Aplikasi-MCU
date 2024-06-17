@@ -25,6 +25,7 @@ func InPaket(pak *util.TabPKT, nPAK *int) {
 
 func CetakPaket(paket util.TabPKT, nPAK int) {
 	var pilih string
+	sortingPaket(&paket,nPAK)
 	for pilih != "C" {
 		fmt.Print("\033[H\033[2J")
 		fmt.Println("----- Daftar  Paket -----")
@@ -90,5 +91,24 @@ func hapusPaket(A *util.TabPKT, n *int) {
 		}
 		fmt.Print("Kembali? (Y/N) : ")
 		fmt.Scan(&pilih)
+	}
+}
+
+func sortingPaket(paket *util.TabPKT, n int) {
+	//Selection Descending
+	pass := 0
+	for pass < n {
+		i := pass
+		idx := pass - 1
+		for i < n {
+			if paket[idx].Harga < paket[i].Harga {
+				idx = i
+			}
+			i++
+		}
+		temp := paket[pass-1]
+		paket[pass-1] = paket[idx]
+		paket[idx] = temp
+		pass++
 	}
 }

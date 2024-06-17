@@ -5,15 +5,15 @@ import "fmt"
 const NMAX int = 10000
 
 type paket struct {
-	Jenis, PktPas string
-	Harga         int
+	Jenis string
+	Harga int
 }
 
 type pasien struct {
 	Nama, Rekap string
 	Waktu       tanggal
-	PaketMCU    paket
-	Biaya, ID   int
+	PaketPas    string
+	Biaya       int
 }
 
 type tanggal struct {
@@ -27,7 +27,7 @@ func CariIdxPas(pas TabPAS, nPas int, x string, h, b, t int) int {
 	found := -1
 	var i int
 	for i < nPas && found == -1 {
-		if pas[i].Nama == x && pas[i].Waktu.D == h &&  pas[i].Waktu.M == b && pas[i].Waktu.Y == t {
+		if pas[i].Nama == x && pas[i].Waktu.D == h && pas[i].Waktu.M == b && pas[i].Waktu.Y == t {
 			found = i
 		} else {
 			i++

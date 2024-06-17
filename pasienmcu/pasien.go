@@ -10,14 +10,15 @@ func InPasien(pas *util.TabPAS, nPAS *int, pak util.TabPKT, nPAK int) {
 	for pilih != "N" {
 		fmt.Print("\033[H\033[2J")
 		fmt.Println("-----  Tambah Data  -----")
-		fmt.Print("ID dan Nama Pasien  (Spasi diganti dengan '_') : ")
-		fmt.Scan(&pas[*nPAS].ID, &pas[*nPAS].Nama)
+		fmt.Print("Nama Pasien  (Spasi diganti dengan '_') : ")
+		fmt.Scan(&pas[*nPAS].Nama)
 		util.OutPaket(pak, nPAK)
 		fmt.Printf("Pilihan Paket: ")
 		fmt.Scan(&paket)
 		idPak := util.CariIdxPak(pak, nPAK, paket)
 		if idPak != -1 {
-			pas[*nPAS].PaketMCU.PktPas = paket
+			pas[*nPAS].PaketPas = paket
+			pas[*nPAS].Biaya = pak[idPak].Harga
 		} else {
 			fmt.Println("Paket belum tersedia!")
 		}
@@ -38,7 +39,7 @@ func CetakPasien(pas util.TabPAS, nPAS int, pak util.TabPKT, nPAK int) {
 		fmt.Println("----- Daftar Pasien -----")
 		fmt.Printf("%-5s %-30s %-15s %-15s %-15s %s \n", "No.", "Nama", "Paket", "Harga", "Tanggal Kunjungan", "Hasil MCU")
 		for i := 0; i < nPAS; i++ {
-			fmt.Printf("%-5d %-30s %-15s %-15d %d/%d/%-15d %s\n", i+1, pas[i].Nama, pas[i].PaketMCU.PktPas, pas[i].Biaya, pas[i].Waktu.D, pas[i].Waktu.M, pas[i].Waktu.Y, pas[i].Rekap)
+			fmt.Printf("%-5d %-30s %-15s %-15d %d/%d/%-15d %s\n", i+1, pas[i].Nama, pas[i].PaketPas, pas[i].Biaya, pas[i].Waktu.D, pas[i].Waktu.M, pas[i].Waktu.Y, pas[i].Rekap)
 		}
 		fmt.Println("A. Edit, B. Hapus, C. Kembali")
 		fmt.Print("Pilihan : ")
@@ -73,7 +74,8 @@ func editPasien(pas *util.TabPAS, nPAS int, pak util.TabPKT, nPAK int) {
 			fmt.Scan(&paket)
 			idPak := util.CariIdxPak(pak, nPAK, paket)
 			if idPak != -1 {
-				pas[idx].PaketMCU.PktPas = paket
+				pas[idx].PaketPas = paket
+				pas[idx].Biaya = pak[idPak].Harga
 			} else {
 				fmt.Println("Paket belum tersedia!")
 			}
@@ -128,10 +130,10 @@ func FindPasien(pas util.TabPAS, nPAS int) {
 			fmt.Print("Nama Pasien / Nama Paket : ")
 			fmt.Scan(&kunci)
 			fmt.Println("----- Daftar Pasien -----")
-		fmt.Printf("%-5s %-30s %-15s %-15s %-15s %s \n", "No.", "Nama", "Paket", "Harga", "Tanggal Kunjungan", "Hasil MCU")
+			fmt.Printf("%-5s %-30s %-15s %-15s %-15s %s \n", "No.", "Nama", "Paket", "Harga", "Tanggal Kunjungan", "Hasil MCU")
 			for i := 0; i < nPAS; i++ {
-				if pas[i].PaketMCU.PktPas == kunci || pas[i].Nama == kunci {
-					fmt.Printf("%-5d %-30s %-15s %-15d %d/%d/%-15d %s\n", i+1, pas[i].Nama, pas[i].PaketMCU.PktPas, pas[i].Biaya, pas[i].Waktu.D, pas[i].Waktu.M, pas[i].Waktu.Y, pas[i].Rekap)
+				if pas[i].PaketPas == kunci || pas[i].Nama == kunci {
+					fmt.Printf("%-5d %-30s %-15s %-15d %d/%d/%-15d %s\n", i+1, pas[i].Nama, pas[i].PaketPas, pas[i].Biaya, pas[i].Waktu.D, pas[i].Waktu.M, pas[i].Waktu.Y, pas[i].Rekap)
 				}
 			}
 		} else if pilih == "C" {
@@ -140,11 +142,11 @@ func FindPasien(pas util.TabPAS, nPAS int) {
 			fmt.Print("Sampai : ")
 			fmt.Scan(&d2, &m2, &y2)
 			fmt.Println("----- Daftar Pasien -----")
-		fmt.Printf("%-5s %-30s %-15s %-15s %-15s %s \n", "No.", "Nama", "Paket", "Harga", "Tanggal Kunjungan", "Hasil MCU")
+			fmt.Printf("%-5s %-30s %-15s %-15s %-15s %s \n", "No.", "Nama", "Paket", "Harga", "Tanggal Kunjungan", "Hasil MCU")
 			for i := 0; i < nPAS; i++ {
 				if (pas[i].Waktu.Y > y1 || (pas[i].Waktu.Y == y1 && pas[i].Waktu.M > m1) || (pas[i].Waktu.Y == y1 && pas[i].Waktu.M == m1 && pas[i].Waktu.D >= d1)) &&
 					(pas[i].Waktu.Y < y2 || (pas[i].Waktu.Y == y2 && pas[i].Waktu.M < m2) || (pas[i].Waktu.Y == y2 && pas[i].Waktu.M == m2 && pas[i].Waktu.D <= d2)) {
-					fmt.Printf("%-5d %-30s %-15s %-15d %d/%d/%-15d %s\n", i+1, pas[i].Nama, pas[i].PaketMCU.PktPas, pas[i].Biaya, pas[i].Waktu.D, pas[i].Waktu.M, pas[i].Waktu.Y, pas[i].Rekap)
+					fmt.Printf("%-5d %-30s %-15s %-15d %d/%d/%-15d %s\n", i+1, pas[i].Nama, pas[i].PaketPas, pas[i].Biaya, pas[i].Waktu.D, pas[i].Waktu.M, pas[i].Waktu.Y, pas[i].Rekap)
 				}
 			}
 		}
@@ -160,7 +162,7 @@ func sortPasien(pas *util.TabPAS, nPAS int) {
 	fmt.Scan(&pilih)
 	pass := 1
 	if pilih == "Newest" {
-		// Selection Sort DESCENDING
+		// Selection Sort Descending
 		for pass < nPAS {
 			idx := pass - 1
 			i := pass
