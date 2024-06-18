@@ -56,13 +56,13 @@ func Login() User {
 
 func CheckRole(currentUser User, role1, role2 string) bool {
 	valid := false
-	if currentUser.Role == role1 || currentUser.Role == role2  {
+	if currentUser.Role == role1 || currentUser.Role == role2 {
 		valid = true
+	} else {
+		fmt.Println("Anda tidak memiliki izin untuk mengakses fitur ini.")
 	}
-	fmt.Println("Anda tidak memiliki izin untuk mengakses fitur ini.")
 	return valid
 }
-
 
 func CariIdxPas(pas TabPAS, nPas int, x string, h, b, t int) int {
 	//Sequential Search

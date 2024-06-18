@@ -62,7 +62,9 @@ func editPaket(paket *util.TabPKT, nPAK int) {
 			fmt.Println("Paket berhasil diubah")
 		} else {
 			fmt.Print("\033[H\033[2J")
-			fmt.Println("Paket tidak terubah/tidak ditemukan!")
+			fmt.Println("----------------------")
+			fmt.Println("Paket Tidak Ditemukan!")
+			fmt.Println("----------------------")
 		}
 		fmt.Print("Kembali? (Y/N) : ")
 		fmt.Scan(&pil)
@@ -87,7 +89,9 @@ func hapusPaket(A *util.TabPKT, n *int) {
 			fmt.Println("Paket berhasil dihapus")
 		} else {
 			fmt.Print("\033[H\033[2J")
-			fmt.Println("Paket tidak terhapus/tidak ditemukan!")
+			fmt.Println("----------------------")
+			fmt.Println("Paket Tidak Ditemukan!")
+			fmt.Println("----------------------")
 		}
 		fmt.Print("Kembali? (Y/N) : ")
 		fmt.Scan(&pilih)
@@ -131,7 +135,9 @@ func FindPaket(paket util.TabPKT, n int) {
 			fmt.Printf("%-30s %s\n", "Nama Paket", "Harga")
 			fmt.Printf("%-30s %d\n", paket[found].Jenis, paket[found].Harga)
 		} else {
+			fmt.Println("----------------------")
 			fmt.Println("Paket Tidak Ditemukan!")
+			fmt.Println("----------------------")
 		}
 		fmt.Print("Kembali? (Y/N) : ")
 		fmt.Scan(&pilih)
