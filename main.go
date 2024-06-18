@@ -57,26 +57,29 @@ func MenuPasien(pas *util.TabPAS, nPAS *int, pak util.TabPKT, nPAK int) {
 		} else if x == 2 {
 			pasienmcu.FindPasien(*pas, *nPAS)
 		} else if x == 3 {
-			pasienmcu.CetakPasien(*pas, *nPAS, pak, nPAK)
+			pasienmcu.CetakPasien(pas, nPAS, pak, nPAK)
 		}
 	}
 }
 
 func MenuPaket(pak *util.TabPKT, nPAK *int) {
 	var x int
-	for x != 3 {
+	for x != 4 {
 		fmt.Print("\033[H\033[2J")
 		fmt.Println("-------------------------")
 		fmt.Println("1. Tambah Paket          ")
-		fmt.Println("2. Lihat Paket           ")
-		fmt.Println("3. Kembali               ")
+		fmt.Println("2. Cari Paket            ")
+		fmt.Println("3. Lihat Paket           ")
+		fmt.Println("4. Kembali               ")
 		fmt.Println("-------------------------")
 		fmt.Print("Pilihan : ")
 		fmt.Scan(&x)
 		if x == 1 {
 			paketmcu.InPaket(pak, nPAK)
 		} else if x == 2 {
-			paketmcu.CetakPaket(*pak, *nPAK)
+			paketmcu.FindPaket(*pak, *nPAK)
+		} else if x == 3 {
+			paketmcu.CetakPaket(pak, nPAK)
 		}
 	}
 

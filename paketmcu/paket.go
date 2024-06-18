@@ -21,25 +21,25 @@ func InPaket(pak *util.TabPKT, nPAK *int) {
 		fmt.Print("Lanjutkan? (Y/N): ")
 		fmt.Scan(&pilih)
 	}
+	sortingPaket(pak, *nPAK)
 }
 
-func CetakPaket(paket util.TabPKT, nPAK int) {
+func CetakPaket(paket *util.TabPKT, nPAK *int) {
 	var pilih string
-	sortingPaket(&paket,nPAK)
 	for pilih != "C" {
 		fmt.Print("\033[H\033[2J")
 		fmt.Println("----- Daftar  Paket -----")
 		fmt.Printf("%-5s %-30s %s\n", "No.", "Nama Paket", "Harga")
-		for i := 0; i < nPAK; i++ {
-			fmt.Printf("%-5d %-30s %d\n", i+1, paket[i].Jenis, paket[i].Harga)
+		for i := 0; i < *nPAK; i++ {
+			fmt.Printf("%-5d %-30s %d\n", i+1, (*paket)[i].Jenis, (*paket)[i].Harga)
 		}
 		fmt.Println("A. Edit, B. Hapus, C. Kembali")
 		fmt.Print("Pilihan : ")
 		fmt.Scan(&pilih)
 		if pilih == "A" {
-			editPaket(&paket, nPAK)
+			editPaket(paket, *nPAK)
 		} else if pilih == "B" {
-			hapusPaket(&paket, &nPAK)
+			hapusPaket(paket, nPAK)
 		} else if pilih != "C" && pilih != "A" && pilih != "B" {
 			fmt.Print("Pilihan Tidak Valid, Pilihan : ")
 			fmt.Scan(&pilih)
@@ -96,7 +96,7 @@ func hapusPaket(A *util.TabPKT, n *int) {
 
 func sortingPaket(paket *util.TabPKT, n int) {
 	//Selection Descending
-	pass := 0
+	pass := 1
 	for pass < n {
 		i := pass
 		idx := pass - 1
@@ -111,4 +111,29 @@ func sortingPaket(paket *util.TabPKT, n int) {
 		paket[idx] = temp
 		pass++
 	}
+}
+
+func FindPaket(paket util.TabPKT, n int) {
+	var name, pilih string
+	for pilih != "Y" {
+		fmt.Print("\033[H\033[2J")
+		fmt.Print("Nama Paket : ")
+		fmt.Scan(&name)
+		found := -1
+		for i := 0; i < n && found == -1; i++ {
+			if paket[i].Jenis == name {
+				found = i
+			}
+		}
+		if found != -1 {
+			fmt.Println("Paket Ditemukan!")
+			fmt.Printf("%-30s %s\n", "Nama Paket", "Harga")
+			fmt.Printf("%-30s %d\n", paket[found].Jenis, paket[found].Harga)
+		} else {
+			fmt.Println("Paket Tidak Ditemukan!")
+		}
+		fmt.Print("Kembali? (Y/N) : ")
+		fmt.Scan(&pilih)
+	}
+
 }

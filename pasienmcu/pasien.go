@@ -29,25 +29,26 @@ func InPasien(pas *util.TabPAS, nPAS *int, pak util.TabPKT, nPAK int) {
 		fmt.Print("Lanjutkan? (Y/N) : ")
 		fmt.Scan(&pilih)
 	}
+	
 }
 
-func CetakPasien(pas util.TabPAS, nPAS int, pak util.TabPKT, nPAK int) {
+func CetakPasien(pasien *util.TabPAS, nPAS *int, pak util.TabPKT, nPAK int) {
 	var pilih string
-	sortPasien(&pas, nPAS)
+	sortPasien(pasien, *nPAS) 
 	for pilih != "C" {
 		fmt.Print("\033[H\033[2J")
 		fmt.Println("----- Daftar Pasien -----")
 		fmt.Printf("%-5s %-30s %-15s %-15s %-15s %s \n", "No.", "Nama", "Paket", "Harga", "Tanggal Kunjungan", "Hasil MCU")
-		for i := 0; i < nPAS; i++ {
-			fmt.Printf("%-5d %-30s %-15s %-15d %d/%d/%-15d %s\n", i+1, pas[i].Nama, pas[i].PaketPas, pas[i].Biaya, pas[i].Waktu.D, pas[i].Waktu.M, pas[i].Waktu.Y, pas[i].Rekap)
+		for i := 0; i < *nPAS; i++ {
+			fmt.Printf("%-5d %-30s %-15s %-15d %d/%d/%-15d %s\n", i+1, (*pasien)[i].Nama, (*pasien)[i].PaketPas, (*pasien)[i].Biaya, (*pasien)[i].Waktu.D, (*pasien)[i].Waktu.M, (*pasien)[i].Waktu.Y, (*pasien)[i].Rekap)
 		}
 		fmt.Println("A. Edit, B. Hapus, C. Kembali")
 		fmt.Print("Pilihan : ")
 		fmt.Scan(&pilih)
 		if pilih == "A" {
-			editPasien(&pas, nPAS, pak, nPAK)
+			editPasien(pasien, *nPAS, pak, nPAK)
 		} else if pilih == "B" {
-			hapusPasien(&pas, &nPAS)
+			hapusPasien(pasien, nPAS)
 		} else if pilih != "C" && pilih != "A" && pilih != "B" {
 			fmt.Print("Pilihan Tidak Valid, Pilihan : ")
 			fmt.Scan(&pilih)
