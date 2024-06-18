@@ -40,7 +40,7 @@ func CetakPaket(paket *util.TabPKT, nPAK *int) {
 			editPaket(paket, *nPAK)
 		} else if pilih == "B" {
 			hapusPaket(paket, nPAK)
-		} else if pilih != "C" && pilih != "A" && pilih != "B" {
+		} else if (pilih != "C") && (pilih != "A") && (pilih != "B") {
 			fmt.Print("Pilihan Tidak Valid, Pilihan : ")
 			fmt.Scan(&pilih)
 		}
@@ -120,6 +120,7 @@ func FindPaket(paket util.TabPKT, n int) {
 		fmt.Print("Nama Paket : ")
 		fmt.Scan(&name)
 		found := -1
+		//Sequential Search
 		for i := 0; i < n && found == -1; i++ {
 			if paket[i].Jenis == name {
 				found = i

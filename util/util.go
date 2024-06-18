@@ -4,6 +4,10 @@ import "fmt"
 
 const NMAX int = 10000
 
+type User struct {
+	Role string
+}
+
 type paket struct {
 	Jenis string
 	Harga int
@@ -23,7 +27,45 @@ type tanggal struct {
 type TabPAS [NMAX]pasien
 type TabPKT [NMAX]paket
 
+func Login() User {
+	var username, password string
+	var currentRole User
+	var ok bool
+	for !ok {
+		fmt.Println("--------- LOGIN ---------")
+		fmt.Print("Username : ")
+		fmt.Scan(&username)
+		fmt.Print("Password : ")
+		fmt.Scan(&password)
+		if username == "petugas" && password == "petugas" {
+			ok = true
+			currentRole.Role = password
+			fmt.Printf("Selamat datang, %s! Anda login sebagai %s.\n", username, currentRole.Role)
+		} else if username == "lab" && password == "lab" {
+			ok = true
+			currentRole.Role = password
+			fmt.Printf("Selamat datang, %s! Anda login sebagai %s.\n", username, currentRole.Role)
+		} else {
+			fmt.Print("\033[H\033[2J")
+			fmt.Println("Username atau password salah")
+			ok = false
+		}
+	}
+	return currentRole
+}
+
+func CheckRole(currentUser User, role1, role2 string) bool {
+	valid := false
+	if currentUser.Role == role1 || currentUser.Role == role2  {
+		valid = true
+	}
+	fmt.Println("Anda tidak memiliki izin untuk mengakses fitur ini.")
+	return valid
+}
+
+
 func CariIdxPas(pas TabPAS, nPas int, x string, h, b, t int) int {
+	//Sequential Search
 	found := -1
 	var i int
 	for i < nPas && found == -1 {
@@ -37,6 +79,7 @@ func CariIdxPas(pas TabPAS, nPas int, x string, h, b, t int) int {
 }
 
 func CariIdxPak(paket TabPKT, nPAS int, x string) int {
+	//Sequential Search
 	found := -1
 	var i int
 	for i < nPAS && found == -1 {

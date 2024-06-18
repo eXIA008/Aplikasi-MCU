@@ -1,10 +1,11 @@
 package main
+
 import (
-	"fmt"
-	"TugasBesar/pasienmcu"
-	"TugasBesar/paketmcu"
-	"TugasBesar/util"
 	"TugasBesar/laporan"
+	"TugasBesar/paketmcu"
+	"TugasBesar/pasienmcu"
+	"TugasBesar/util"
+	"fmt"
 )
 
 func main() {
@@ -12,8 +13,8 @@ func main() {
 	var dataPas util.TabPAS
 	var nPkt, nPas int
 	var x int
-
-	for x != 4 {
+	user := util.Login()
+	for x != 5 {
 		fmt.Println("-------- WELCOME --------")
 		fmt.Println("     Medical Checkup     ")
 		fmt.Println("        Main Menu        ")
@@ -21,24 +22,30 @@ func main() {
 		fmt.Println("1. Data Pasien           ")
 		fmt.Println("2. Paket Layanan         ")
 		fmt.Println("3. Laporan Pemasukan     ")
-		fmt.Println("4. Keluar                ")
+		fmt.Println("4. Log out               ")
+		fmt.Println("5. Keluar                ")
 		fmt.Println("-------------------------")
 		fmt.Print("Pilihan: ")
 		fmt.Scan(&x)
-		if x == 1 {
-			MenuPasien(&dataPas, &nPas, dataPkt, nPkt)
-		} else if x == 2 {
+		if x == 1 && util.CheckRole(user, "petugas", "lab") {
+			MenuPasien(&dataPas, &nPas, dataPkt, nPkt, user)
+		} else if x == 2 && util.CheckRole(user, "petugas", "") {
 			MenuPaket(&dataPkt, &nPkt)
-		} else if x == 3 {
+		} else if x == 3 && util.CheckRole(user, "petugas", "") {
 			laporan.Laporan(dataPas, nPas)
 		} else if x == 4 {
+			fmt.Print("\033[H\033[2J")
+			user.Role = ""
+			user = util.Login()
+		} else if x == 5 {
 			fmt.Print("\033[H\033[2J")
 			fmt.Println("---  Selamat Tinggal  ---")
 		}
 	}
+
 }
 
-func MenuPasien(pas *util.TabPAS, nPAS *int, pak util.TabPKT, nPAK int) {
+func MenuPasien(pas *util.TabPAS, nPAS *int, pak util.TabPKT, nPAK int, user util.User) {
 	var x int
 	for x != 4 {
 		fmt.Print("\033[H\033[2J")
@@ -52,11 +59,11 @@ func MenuPasien(pas *util.TabPAS, nPAS *int, pak util.TabPKT, nPAK int) {
 		fmt.Println("-------------------------")
 		fmt.Print("Pilihan : ")
 		fmt.Scan(&x)
-		if x == 1 {
+		if x == 1 && util.CheckRole(user, "petugas", ""){
 			pasienmcu.InPasien(pas, nPAS, pak, nPAK)
-		} else if x == 2 {
+		} else if x == 2 && util.CheckRole(user, "petugas", "lab") {
 			pasienmcu.FindPasien(*pas, *nPAS)
-		} else if x == 3 {
+		} else if x == 3 && util.CheckRole(user, "petugas", "lab") {
 			pasienmcu.CetakPasien(pas, nPAS, pak, nPAK)
 		}
 	}

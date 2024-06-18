@@ -49,7 +49,7 @@ func CetakPasien(pasien *util.TabPAS, nPAS *int, pak util.TabPKT, nPAK int) {
 			editPasien(pasien, *nPAS, pak, nPAK)
 		} else if pilih == "B" {
 			hapusPasien(pasien, nPAS)
-		} else if pilih != "C" && pilih != "A" && pilih != "B" {
+		} else if (pilih != "C") && (pilih != "A") && (pilih != "B") {
 			fmt.Print("Pilihan Tidak Valid, Pilihan : ")
 			fmt.Scan(&pilih)
 		}
@@ -128,10 +128,11 @@ func FindPasien(pas util.TabPAS, nPAS int) {
 		fmt.Print("Pilihan : ")
 		fmt.Scan(&pilih)
 		if pilih == "A" || pilih == "B" {
-			fmt.Print("Nama Pasien / Nama Paket : ")
+			fmt.Print("Nama : ")
 			fmt.Scan(&kunci)
 			fmt.Println("----- Daftar Pasien -----")
 			fmt.Printf("%-5s %-30s %-15s %-15s %-15s %s \n", "No.", "Nama", "Paket", "Harga", "Tanggal Kunjungan", "Hasil MCU")
+			//Sequential Search
 			for i := 0; i < nPAS; i++ {
 				if pas[i].PaketPas == kunci || pas[i].Nama == kunci {
 					fmt.Printf("%-5d %-30s %-15s %-15d %d/%d/%-15d %s\n", i+1, pas[i].Nama, pas[i].PaketPas, pas[i].Biaya, pas[i].Waktu.D, pas[i].Waktu.M, pas[i].Waktu.Y, pas[i].Rekap)
@@ -144,6 +145,7 @@ func FindPasien(pas util.TabPAS, nPAS int) {
 			fmt.Scan(&d2, &m2, &y2)
 			fmt.Println("----- Daftar Pasien -----")
 			fmt.Printf("%-5s %-30s %-15s %-15s %-15s %s \n", "No.", "Nama", "Paket", "Harga", "Tanggal Kunjungan", "Hasil MCU")
+			//Sequential Search
 			for i := 0; i < nPAS; i++ {
 				if (pas[i].Waktu.Y > y1 || (pas[i].Waktu.Y == y1 && pas[i].Waktu.M > m1) || (pas[i].Waktu.Y == y1 && pas[i].Waktu.M == m1 && pas[i].Waktu.D >= d1)) &&
 					(pas[i].Waktu.Y < y2 || (pas[i].Waktu.Y == y2 && pas[i].Waktu.M < m2) || (pas[i].Waktu.Y == y2 && pas[i].Waktu.M == m2 && pas[i].Waktu.D <= d2)) {
@@ -159,10 +161,10 @@ func FindPasien(pas util.TabPAS, nPAS int) {
 func sortPasien(pas *util.TabPAS, nPAS int) {
 	fmt.Print("\033[H\033[2J")
 	var pilih string
-	fmt.Print("Pengurutan (Newest/Oldest) :")
+	fmt.Print("Pengurutan (ASC/DSC) :")
 	fmt.Scan(&pilih)
 	pass := 1
-	if pilih == "Newest" {
+	if pilih == "DSC" {
 		// Selection Sort Descending
 		for pass < nPAS {
 			idx := pass - 1
@@ -181,7 +183,7 @@ func sortPasien(pas *util.TabPAS, nPAS int) {
 			pas[idx] = temp
 			pass++
 		}
-	} else if pilih == "Oldest" {
+	} else if pilih == "ASC" {
 		//Insertion Sort Ascending
 		for pass < nPAS {
 			temp := pas[pass]
