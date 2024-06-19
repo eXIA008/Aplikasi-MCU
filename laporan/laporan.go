@@ -14,9 +14,9 @@ func Laporan(pasien util.TabPAS, nPas int) {
 		fmt.Scan(&d1, &m1, &y1)
 		fmt.Print("Sampai  : ")
 		fmt.Scan(&d2, &m2, &y2)
-		fmt.Println("---------- Laporan  Pemasukan ----------")
-		fmt.Printf("-------- %d/%d/%d - %d/%d/%d --------\n", d1, m1, y1, d2, m2, y2)
-		fmt.Println("-------------------------------------")
+		fmt.Println("--------- Laporan Pemasukan --------")
+		fmt.Printf("------- %d/%d/%d - %d/%d/%d ------\n", d1, m1, y1, d2, m2, y2)
+		fmt.Println("------------------------------------")
 		for i := 0; i < nPas; i++ {
 			if (pasien[i].Waktu.Y > y1 || (pasien[i].Waktu.Y == y1 && pasien[i].Waktu.M > m1) || (pasien[i].Waktu.Y == y1 && pasien[i].Waktu.M == m1 && pasien[i].Waktu.D >= d1)) &&
 				(pasien[i].Waktu.Y < y2 || (pasien[i].Waktu.Y == y2 && pasien[i].Waktu.M < m2) || (pasien[i].Waktu.Y == y2 && pasien[i].Waktu.M == m2 && pasien[i].Waktu.D <= d2)) {

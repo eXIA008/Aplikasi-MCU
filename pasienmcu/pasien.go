@@ -50,8 +50,7 @@ func CetakPasien(pasien *util.TabPAS, nPAS *int, pak util.TabPKT, nPAK int, user
 		} else if pilih == "B" {
 			hapusPasien(pasien, nPAS)
 		} else if (pilih != "C") && (pilih != "A") && (pilih != "B") {
-			fmt.Print("Pilihan tidak valid silahkan pilih kembali : ")
-			fmt.Scan(&pilih)
+			fmt.Print("Pilihan tidak valid silahkan pilih kembali!")
 		}
 	}
 }
@@ -136,7 +135,7 @@ func hapusPasien(pas *util.TabPAS, nPAS *int) {
 
 func FindPasien(pas util.TabPAS, nPAS int) {
 	var pilih, kunci, K string
-	var d1, d2, m1, m2, y1, y2 int
+	var d1, d2, m1, m2, y1, y2,j int
 	for K != "Y" {
 		fmt.Print("\033[H\033[2J")
 		fmt.Println("A. Nama, B. Paket, C.Periode")
@@ -150,7 +149,7 @@ func FindPasien(pas util.TabPAS, nPAS int) {
 			//Sequential Search
 			for i := 0; i < nPAS; i++ {
 				if pas[i].PaketPas == kunci || pas[i].Nama == kunci {
-					fmt.Printf("%-5d %-30s %-15s %-15d %d/%d/%-15d %s\n", i+1, pas[i].Nama, pas[i].PaketPas, pas[i].Biaya, pas[i].Waktu.D, pas[i].Waktu.M, pas[i].Waktu.Y, pas[i].Rekap)
+					fmt.Printf("%-5d %-30s %-15s %-15d %d/%d/%-15d %s\n", j+1, pas[i].Nama, pas[i].PaketPas, pas[i].Biaya, pas[i].Waktu.D, pas[i].Waktu.M, pas[i].Waktu.Y, pas[i].Rekap)
 				}
 			}
 		} else if pilih == "C" {
@@ -159,12 +158,12 @@ func FindPasien(pas util.TabPAS, nPAS int) {
 			fmt.Print("Sampai : ")
 			fmt.Scan(&d2, &m2, &y2)
 			fmt.Println("----- Daftar Pasien -----")
-			fmt.Printf("%-5s %-30s %-15s %-15s %-15s %s \n", "No.", "Nama", "Paket", "Harga", "Tanggal Kunjungan", "Hasil MCU")
+			fmt.Printf("%-5s %-30s %-15s %-15s %-15s %s\n", "No.", "Nama", "Paket", "Harga", "Tanggal Kunjungan", "Hasil MCU")
 			//Sequential Search
 			for i := 0; i < nPAS; i++ {
 				if (pas[i].Waktu.Y > y1 || (pas[i].Waktu.Y == y1 && pas[i].Waktu.M > m1) || (pas[i].Waktu.Y == y1 && pas[i].Waktu.M == m1 && pas[i].Waktu.D >= d1)) &&
 					(pas[i].Waktu.Y < y2 || (pas[i].Waktu.Y == y2 && pas[i].Waktu.M < m2) || (pas[i].Waktu.Y == y2 && pas[i].Waktu.M == m2 && pas[i].Waktu.D <= d2)) {
-					fmt.Printf("%-5d %-30s %-15s %-15d %d/%d/%-15d %s\n", i+1, pas[i].Nama, pas[i].PaketPas, pas[i].Biaya, pas[i].Waktu.D, pas[i].Waktu.M, pas[i].Waktu.Y, pas[i].Rekap)
+					fmt.Printf("%-5d %-30s %-15s %-15d %d/%d/%-15d %s\n", j+1, pas[i].Nama, pas[i].PaketPas, pas[i].Biaya, pas[i].Waktu.D, pas[i].Waktu.M, pas[i].Waktu.Y, pas[i].Rekap)
 				}
 			}
 		} else {

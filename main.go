@@ -72,6 +72,8 @@ func MenuPaket(pak *util.TabPKT, nPAK *int) {
 	var x int
 	for x != 4 {
 		fmt.Println("-------------------------")
+		fmt.Println("       Menu  Paket       ")
+		fmt.Println("-------------------------")
 		fmt.Println("1. Tambah Paket          ")
 		fmt.Println("2. Cari Paket            ")
 		fmt.Println("3. Lihat Paket           ")
