@@ -69,12 +69,14 @@ func editPasien(pas *util.TabPAS, nPAS int, pak util.TabPKT, nPAK int, user util
 		if idx != -1 {
 			var pilihan string
 			if user.Role == "petugas" {
-				fmt.Print("Apa yang ingin Anda edit? (Nama/Paket): ")
+				fmt.Print("Apa yang ingin Anda edit? (Nama/Paket/Tanggal): ")
 				fmt.Scan(&pilihan)
 				if pilihan == "Nama" {
 					fmt.Print("Nama Pasien Baru : ")
 					fmt.Scan(&pas[idx].Nama)
+					fmt.Println("----------------------------")
 					fmt.Println("Data Pasien Berhasil Diubah!")
+					fmt.Println("----------------------------")
 				} else if pilihan == "Paket" {
 					util.OutPaket(pak, nPAK)
 					fmt.Print("Paket Baru : ")
@@ -83,15 +85,25 @@ func editPasien(pas *util.TabPAS, nPAS int, pak util.TabPKT, nPAK int, user util
 					if idPak != -1 {
 						pas[idx].PaketPas = paket
 						pas[idx].Biaya = pak[idPak].Harga
+						fmt.Println("----------------------------")
 						fmt.Println("Data Pasien Berhasil Diubah!")
+						fmt.Println("----------------------------")
 					} else {
 						fmt.Println("Paket belum tersedia!")
 					}
+				} else if pilihan == "Tanggal" {
+					fmt.Print("Tanggal Baru : ")
+					fmt.Scan(&pas[idx].Waktu.D, &pas[idx].Waktu.M, &pas[idx].Waktu.Y)
+					fmt.Println("----------------------------")
+					fmt.Println("Data Pasien Berhasil Diubah!")
+					fmt.Println("----------------------------")
 				}
 			} else if user.Role == "lab" {
 				fmt.Print("Hasil Medical Checkup : ")
 				fmt.Scan(&pas[idx].Rekap)
+				fmt.Println("----------------------------")
 				fmt.Println("Data Pasien Berhasil Diubah!")
+				fmt.Println("----------------------------")
 			}
 		} else {
 			fmt.Print("\033[H\033[2J")
@@ -121,7 +133,9 @@ func hapusPasien(pas *util.TabPAS, nPAS *int) {
 				temp++
 			}
 			*nPAS--
-			fmt.Println("Data berhasil dihapus")
+			fmt.Println("----------------------------")
+			fmt.Println("Data Pasien berhasil dihapus")
+			fmt.Println("----------------------------")
 		} else {
 			fmt.Print("\033[H\033[2J")
 			fmt.Println("----------------------------")
@@ -135,7 +149,7 @@ func hapusPasien(pas *util.TabPAS, nPAS *int) {
 
 func FindPasien(pas util.TabPAS, nPAS int) {
 	var pilih, kunci, K string
-	var d1, d2, m1, m2, y1, y2,j int
+	var d1, d2, m1, m2, y1, y2, j int
 	for K != "Y" {
 		fmt.Print("\033[H\033[2J")
 		fmt.Println("A. Nama, B. Paket, C.Periode")
@@ -215,7 +229,6 @@ func sortPasien(pas *util.TabPAS, nPAS int) {
 			pass++
 		}
 	} else {
-		fmt.Print("Pilihan tidak valid silahkan pilih kembali : ")
-		fmt.Scan(&pilih)
+		fmt.Print("Pilihan tidak valid silahkan pilih kembali!")
 	}
 }
