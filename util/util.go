@@ -80,6 +80,7 @@ func CariIdxPas(pas TabPAS, nPas int, x string, h, b, t int) int {
 
 func CariIdxPak(paket TabPKT, nPAS int, x string) int {
 	//Sequential Search
+	/*
 	found := -1
 	var i int
 	for i < nPAS && found == -1 {
@@ -89,6 +90,22 @@ func CariIdxPak(paket TabPKT, nPAS int, x string) int {
 			i++
 		}
 	}
+	return found
+	*/
+	//Binary Search
+	kr := 0
+	kn := nPAS - 1
+	found := -1
+	for kr <= kn && found == -1{
+		mid := (kr + kn)/2
+		if paket[mid].Jenis < x {
+			kr = mid + 1
+		} else if paket[mid].Jenis > x {
+			kn = mid - 1
+		} else {
+			found = mid
+		}
+	} 
 	return found
 }
 
