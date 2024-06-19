@@ -41,7 +41,7 @@ func CetakPaket(paket *util.TabPKT, nPAK *int) {
 		} else if pilih == "B" {
 			hapusPaket(paket, nPAK)
 		} else if (pilih != "C") && (pilih != "A") && (pilih != "B") {
-			fmt.Print("Pilihan Tidak Valid, Pilihan : ")
+			fmt.Print("Pilihan tidak valid silahkan pilih kembali : ")
 			fmt.Scan(&pilih)
 		}
 	}

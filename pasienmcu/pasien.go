@@ -50,7 +50,7 @@ func CetakPasien(pasien *util.TabPAS, nPAS *int, pak util.TabPKT, nPAK int, user
 		} else if pilih == "B" {
 			hapusPasien(pasien, nPAS)
 		} else if (pilih != "C") && (pilih != "A") && (pilih != "B") {
-			fmt.Print("Pilihan Tidak Valid, Pilihan : ")
+			fmt.Print("Pilihan tidak valid silahkan pilih kembali : ")
 			fmt.Scan(&pilih)
 		}
 	}
@@ -93,7 +93,7 @@ func editPasien(pas *util.TabPAS, nPAS int, pak util.TabPKT, nPAK int, user util
 				fmt.Print("Hasil Medical Checkup : ")
 				fmt.Scan(&pas[idx].Rekap)
 				fmt.Println("Data Pasien Berhasil Diubah!")
-			} 
+			}
 		} else {
 			fmt.Print("\033[H\033[2J")
 			fmt.Println("----------------------------")
@@ -167,6 +167,8 @@ func FindPasien(pas util.TabPAS, nPAS int) {
 					fmt.Printf("%-5d %-30s %-15s %-15d %d/%d/%-15d %s\n", i+1, pas[i].Nama, pas[i].PaketPas, pas[i].Biaya, pas[i].Waktu.D, pas[i].Waktu.M, pas[i].Waktu.Y, pas[i].Rekap)
 				}
 			}
+		} else {
+			fmt.Println("Pilihan Tidak Valid, Silahkan Mengulang Kembali!")
 		}
 		fmt.Print("Kembali? (Y/N) : ")
 		fmt.Scan(&K)
