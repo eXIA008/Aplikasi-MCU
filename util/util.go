@@ -7,7 +7,7 @@ const NMAX int = 10000
 type User struct {
 	Role string
 }
-
+	
 type paket struct {
 	Jenis string
 	Harga int
@@ -78,35 +78,22 @@ func CariIdxPas(pas TabPAS, nPas int, x string, h, b, t int) int {
 	return found
 }
 
-func CariIdxPak(paket TabPKT, nPAS int, x string) int {
-	//Sequential Search
-	/*
-	found := -1
-	var i int
-	for i < nPAS && found == -1 {
-		if paket[i].Jenis == x {
-			found = i
-		} else {
-			i++
-		}
-	}
-	return found
-	*/
-	//Binary Search
-	kr := 0
-	kn := nPAS - 1
-	found := -1
-	for kr <= kn && found == -1{
-		mid := (kr + kn)/2
-		if paket[mid].Jenis < x {
-			kr = mid + 1
-		} else if paket[mid].Jenis > x {
-			kn = mid - 1
-		} else {
-			found = mid
-		}
-	} 
-	return found
+	func CariIdxPak(paket TabPKT, nPAS int, x string) int {
+		//Binary Search
+		kr := 0
+		kn := nPAS - 1
+		found := -1
+		for kr <= kn && found == -1{
+			mid := (kr + kn)/2
+			if paket[mid].Jenis < x {
+				kr = mid + 1
+			} else if paket[mid].Jenis > x {
+				kn = mid - 1
+			} else {
+				found = mid
+			}
+		} 
+		return found
 }
 
 func OutPaket(paket TabPKT, nPAK int) {
