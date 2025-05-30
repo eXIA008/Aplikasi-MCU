@@ -1,9 +1,10 @@
-Deskripsi Singkat : 
+# Aplikasi Sederhana MCU
+### Deskripsi Singkat : 
 Rancangan Aplikasi sederhana yang digunakan untuk mengelola data pasien yang melakukan MCU. 
 Data yang diolah adalah data paket layanan dan juga data pasien yang melakukan MCU. 
-Pengguna aplikasi adalah petugas rumah sakit atau laboratorium
+Pengguna aplikasi adalah petugas rumah sakit atau laboratorium.
 
-Spesifikasi :
+### Spesifikasi :
 a. Pengguna bisa melakukan penambahan, pengubahan (edit), dan penghapusan data
 paket MCU, data pasien, dan rekap hasil MCU.
 
